@@ -1,0 +1,18 @@
+\documentclass[border=0pt]{standalone}
+\usepackage{graphicx}
+
+\newlength{\figwidth}
+\setlength{\figwidth}{15cm}
+
+\begin{document}
+\begin{tabular}{@{}l@{}}
+  % ── Top row: resized to match bottom panel width ──────────────────────────
+  \resizebox{\figwidth}{!}{%
+    \includegraphics[height=5cm]{rescale_bayes_variants.pdf}%
+    \hspace{4pt}%
+    \includegraphics[height=5cm]{figure_histogram_example_grouped.pdf}%
+  }\\[4pt]
+  % ── Bottom row ────────────────────────────────────────────────────────────
+  \includegraphics[width=\figwidth]{figure_bayesian_rescaling_SBM_BA.pdf}
+\end{tabular}
+\end{document}
