@@ -10,8 +10,6 @@ This repository contains replication code for the network simulations and figure
 pip install -r requirements.txt
 ```
 
-Core dependencies: `matplotlib`, `numpy`, `networkx`, `pyprojroot`
-
 ## Empirical data
 
 The empirical analyses (Figure 1, Figure S1) use survey data from:
@@ -20,9 +18,23 @@ The empirical analyses (Figure 1, Figure S1) use survey data from:
 
 The raw data files with survey participant data are not tracked in this repository. See `01_empirical/data/README.md`.
 
-## Quick start: what runs immediately
 
-These notebooks require no simulation data and can be run right away:
+## Repository structure
+
+```
+src/                           Shared simulation library (network generation, opinion dynamics)
+01_empirical/                  Empirical pattern analysis (Figs 1, S1)
+02_network_illustrations/      Conceptual diagrams for Fig 2
+03_analytical/                 Closed-form mathematical results (Figs 3, 4 panels F–H)
+04_homophily_simulations/      Baseline homophily-only simulations
+05_bayesian_simulations/       Bayesian perception distortion (Figs 4, S2–S3)
+06_swap_simulations/           Robustness checks with node swaps (Figs 5, S4–S5, Tables S1–S7)
+figures/                       All figure outputs; .tex files for assembled multi-panel figures
+```
+
+## Quick start
+
+These notebooks require no additional data and can be run right away:
 
 - `03_analytical/make_figure_main.ipynb` — Fig 3
 - `03_analytical/make_figure_bayesian.ipynb` — Fig 4 panels F–H
@@ -35,7 +47,7 @@ These notebooks require no simulation data and can be run right away:
 - `06_swap_simulations/generate_opinion_histograms.ipynb` — Fig 5 panel B
 - `06_swap_simulations/generate_asymmetric_figures.ipynb` — Figs S4–S5 (precomputed data included)
 
-These notebooks need external data first (see the note at the top of each):
+These notebooks need external data before they can be run:
 
 - `01_empirical/*.ipynb` — requires `participant_data.csv` (Sparkman et al. 2022; see `01_empirical/data/README.md`)
 - `04_homophily_simulations/compute_summary_statistics.ipynb` — run `04_homophily_simulations/run_simulations.py` first
@@ -86,20 +98,8 @@ python 06_swap_simulations/run_asymmetric_swaps.py
 python 05_bayesian_simulations/run_simulations.py
 ```
 
-All scripts use `ProcessPoolExecutor` and sweep homophily ∈ {0, 0.25, 0.5, 0.75, 1}, m ∈ {2, 5}, num_agents ∈ {1000, 10000} (runtime: ~30–60 min per script on a multi-core machine).
+The scripts sweep homophily ∈ {0, 0.25, 0.5, 0.75, 1}, m ∈ {2, 5}, num_agents ∈ {1000, 10000}.
 
-## Repository structure
-
-```
-src/                           Shared simulation library (network generation, opinion dynamics)
-01_empirical/                  Empirical pattern analysis (Figs 1, S1)
-02_network_illustrations/      Conceptual diagrams for Fig 2
-03_analytical/                 Closed-form mathematical results (Figs 3, 4 panels F–H)
-04_homophily_simulations/      Baseline homophily-only simulations
-05_bayesian_simulations/       Bayesian perception distortion (Figs 4, S2–S3)
-06_swap_simulations/           Robustness checks with node swaps (Figs 5, S4–S5, Tables S1–S7)
-figures/                       All figure outputs; .tex files for assembled multi-panel figures
-```
 
 ## Attribution for `src/`
 
