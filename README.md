@@ -1,4 +1,4 @@
-# Replication code: "Can homophily explain public underestimation of climate policy support?"
+# Code for: "Can homophily explain public underestimation of climate policy support?"
 
 **Ekaterina Landgren, Shriya Nagpal, Joshua Garland, Yaw Acquah, Matthew G. Burgess**
 
