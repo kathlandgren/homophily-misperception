@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  9 JUN 2026 15:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  29 JUN 2026 16:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -135,11 +135,11 @@ File: single_panel_high_homophily_without_legend.pdf Graphic file (type pdf)
 Package pdftex.def Info: single_panel_high_homophily_without_legend.pdf  used o
 n input line 9.
 (pdftex.def)             Requested size: 216.48991pt x 156.49014pt.
-<figure_histogram_example_grouped.pdf, id=2, 239.52798pt x 208.43622pt>
-File: figure_histogram_example_grouped.pdf Graphic file (type pdf)
-<use figure_histogram_example_grouped.pdf>
-Package pdftex.def Info: figure_histogram_example_grouped.pdf  used on input li
-ne 10.
+<figure_histogram_example_grouped_swaps.pdf, id=2, 239.52798pt x 208.43622pt>
+File: figure_histogram_example_grouped_swaps.pdf Graphic file (type pdf)
+<use figure_histogram_example_grouped_swaps.pdf>
+Package pdftex.def Info: figure_histogram_example_grouped_swaps.pdf  used on in
+put line 10.
 (pdftex.def)             Requested size: 179.8429pt x 156.49014pt.
 
 [1
@@ -148,7 +148,7 @@ ne 10.
 Non-PDF special ignored!
 <special> papersize=404.33284pt,160.09018pt
  <./single_panel_high_homophily_without_legend.pdf> <./figure_histogram_example
-_grouped.pdf>] (./combine_swap_fig.aux)
+_grouped_swaps.pdf>] (./combine_swap_fig.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -156,14 +156,14 @@ L3 programming layer <2026-01-19>
  ) 
 Here is how much of TeX's memory you used:
  1889 strings out of 467525
- 32953 string characters out of 5418982
+ 32995 string characters out of 5418982
  434756 words of memory out of 5000000
  30822 multiletter control sequences out of 15000+600000
  627721 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,10n,71p,225b,279s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on combine_swap_fig.pdf (1 page, 30457 bytes).
+Output written on combine_swap_fig.pdf (1 page, 30471 bytes).
 PDF statistics:
  97 PDF objects out of 1000 (max. 8388607)
  22 compressed objects within 1 object stream

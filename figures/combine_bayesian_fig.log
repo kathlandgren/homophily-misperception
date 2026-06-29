@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  9 JUN 2026 15:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  29 JUN 2026 16:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -133,12 +133,12 @@ File: rescale_bayes_variants.pdf Graphic file (type pdf)
 <use rescale_bayes_variants.pdf>
 Package pdftex.def Info: rescale_bayes_variants.pdf  used on input line 14.
 (pdftex.def)             Requested size: 260.83069pt x 142.26378pt.
-<figure_histogram_example_grouped.pdf, id=2, 239.52798pt x 208.43622pt>
-File: figure_histogram_example_grouped.pdf Graphic file (type pdf)
-<use figure_histogram_example_grouped.pdf>
-Package pdftex.def Info: figure_histogram_example_grouped.pdf  used on input li
-ne 14.
-(pdftex.def)             Requested size: 163.49454pt x 142.26378pt.
+<figure_histogram_example_grouped_bayesian.pdf, id=2, 162.6075pt x 162.6075pt>
+File: figure_histogram_example_grouped_bayesian.pdf Graphic file (type pdf)
+<use figure_histogram_example_grouped_bayesian.pdf>
+Package pdftex.def Info: figure_histogram_example_grouped_bayesian.pdf  used on
+ input line 14.
+(pdftex.def)             Requested size: 142.27376pt x 142.26378pt.
 <figure_bayesian_rescaling_SBM_BA.pdf, id=3, 462.63312pt x 381.57957pt>
 File: figure_bayesian_rescaling_SBM_BA.pdf Graphic file (type pdf)
 <use figure_bayesian_rescaling_SBM_BA.pdf>
@@ -150,9 +150,9 @@ ne 16.
 
 
 Non-PDF special ignored!
-<special> papersize=426.80241pt,504.97623pt
- <./rescale_bayes_variants.pdf> <./figure_histogram_example_grouped.pdf> <./fig
-ure_bayesian_rescaling_SBM_BA.pdf>] (./combine_bayesian_fig.aux)
+<special> papersize=426.80246pt,512.36554pt
+ <./rescale_bayes_variants.pdf> <./figure_histogram_example_grouped_bayesian.pd
+f> <./figure_bayesian_rescaling_SBM_BA.pdf>] (./combine_bayesian_fig.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -160,16 +160,16 @@ L3 programming layer <2026-01-19>
  ) 
 Here is how much of TeX's memory you used:
  1896 strings out of 467525
- 33184 string characters out of 5418982
+ 33247 string characters out of 5418982
  435756 words of memory out of 5000000
  30829 multiletter control sequences out of 15000+600000
  627721 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,71p,229b,305s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on combine_bayesian_fig.pdf (1 page, 107649 bytes).
+Output written on combine_bayesian_fig.pdf (1 page, 107912 bytes).
 PDF statistics:
- 174 PDF objects out of 1000 (max. 8388607)
+ 175 PDF objects out of 1000 (max. 8388607)
  38 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
