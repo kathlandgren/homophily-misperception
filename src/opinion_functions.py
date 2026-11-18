@@ -195,7 +195,7 @@ def assess_opinion_weigh_connected(n, G, minority_nodes, narcissistic=False):
     y = neighbor_estimate / neighbor_degree_count
     return y
 
-def generate_perceived_opinion(G, minority_nodes, media_nodes, narcissistic=False, weigh_connected=False, bayes=False, delta=0.5, gamma=0.5):
+def generate_perceived_opinion(G, minority_nodes, media_nodes, narcissistic=True, weigh_connected=False, bayes=False, delta=0.5, gamma=0.5):
     """
     Generate the perceived and true opinions for all non-media nodes in the graph.
 
@@ -355,7 +355,7 @@ def run_simulation(homophily, m, num_agents, num_sim, minority_fraction, save_fr
 
             # Generate true and perceived opinions for nodes
             true_opinion, perceived_opinion = generate_perceived_opinion(
-                G, minority_nodes, {}, narcissistic=False, weigh_connected=False
+                G, minority_nodes, {}, narcissistic=True, weigh_connected=False
             )
 
             # Extract perceived opinions for minority and majority agents
@@ -457,7 +457,7 @@ def run_simulation_with_swaps(homophily, m, num_agents, num_sim, num_swaps, mino
 
                 # Calculate perceived and true opinions
                 true_opinion, perceived_opinion = generate_perceived_opinion(
-                    G, minority_nodes, {}, narcissistic=False, weigh_connected=False
+                    G, minority_nodes, {}, narcissistic=True, weigh_connected=False
                 )
 
                 # Extract opinions for majority and minority groups
@@ -713,7 +713,7 @@ def run_simulation_with_swaps_asymmetric(h_ss, h_oo, m, num_agents, num_sim, num
                     G, minority_nodes = swap_top_maj_opinion(G, minority_nodes)
 
                 true_opinion, perceived_opinion = generate_perceived_opinion(
-                    G, minority_nodes, {}, narcissistic=False, weigh_connected=False
+                    G, minority_nodes, {}, narcissistic=True, weigh_connected=False
                 )
 
                 minority_opinion = [perceived_opinion[i] for i in minority_nodes]

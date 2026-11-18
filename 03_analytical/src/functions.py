@@ -82,6 +82,31 @@ def compute_supporter_perception(No, Ns, p_os,p_so, p_ss):
     perceived_fraction = perceived_supporters / total_connections
     return perceived_fraction
 
+def _pa_degree_moments(m, K=500000):
+    """E[k/(k+1)] and E[1/(k+1)] over BA degree distribution P(k)=2m(m+1)/(k(k+1)(k+2))."""
+    import numpy as np
+    k = np.arange(m, K + 1, dtype=np.float64)
+    Pk = 2 * m * (m + 1) / (k * (k + 1) * (k + 2))
+    return float(np.sum(Pk * k / (k + 1))), float(np.sum(Pk / (k + 1)))
+
+def compute_opponent_perception_narcissistic(No, Ns, p_os, p_so, p_oo, m):
+    """
+    Perceived fraction of supporters by opponent group, narcissistic=True.
+    Applies degree-distribution weighting for the PA self-inclusion term.
+    """
+    q_o = compute_opponent_perception(No, Ns, p_os, p_so, p_oo)
+    E_k_k1, _ = _pa_degree_moments(m)
+    return q_o * E_k_k1
+
+def compute_supporter_perception_narcissistic(No, Ns, p_os, p_so, p_ss, m):
+    """
+    Perceived fraction of supporters by supporter group, narcissistic=True.
+    Applies degree-distribution weighting for the PA self-inclusion term.
+    """
+    q_s = compute_supporter_perception(No, Ns, p_os, p_so, p_ss)
+    E_k_k1, E_1_k1 = _pa_degree_moments(m)
+    return E_1_k1 + q_s * E_k_k1
+
 def compute_misperception(fs, perceived_fraction):
     """
     Compute the misperception of supporters, defined as the difference between

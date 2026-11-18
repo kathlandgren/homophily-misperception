@@ -1,4 +1,10 @@
-matplotlib
-numpy
-networkx
-pyprojroot
+# Versions used to produce the figures in the revised manuscript (Python 3.13)
+matplotlib==3.10.5
+networkx==3.5
+numpy==2.3.2
+pandas==2.3.2
+pyprojroot==0.3.0
+scipy==1.16.3
+seaborn==0.13.2
+# to run the notebooks
+jupyter

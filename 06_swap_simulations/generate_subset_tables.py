@@ -1,0 +1,152 @@
+r"""generate_subset_tables.py — SI swap tables (si_tables.tex), the 7-condition subset of the swap simulations.
+
+7 original (h_ss, h_oo) conditions; m in {2,5,10}; f_s in {2/3, 0.8}.
+One table per (h_ss, h_oo, f_s): three sub-tables (m=2,5,10), each with
+columns: Swaps | beta_s | beta_o | beta_overall | beta_unswapped.
+
+npz axes are [i_hoo, i_hss, :] — oi (hoo index) is FIRST, si (hss index) SECOND.
+
+Data required: 06_swap_simulations/output/ (submit_sweep_F.sh).
+
+Output: tables/si_tables.tex (same name as in the manuscript, \input{si_tables})
+
+Usage:
+    python 06_swap_simulations/generate_subset_tables.py
+"""
+
+import numpy as np
+from pyprojroot import here
+
+DATA_DIR   = here() / '06_swap_simulations' / 'output'
+OUT_PATH   = here() / 'tables' / 'si_tables.tex'
+
+CONDITIONS = [
+    (0.25, 0.25), (0.50, 0.50), (0.75, 0.75),
+    (0.25, 0.75), (0.75, 0.25),
+    (0.50, 0.75), (0.75, 0.50),
+]
+M_VALS = [2, 5, 10]
+FS_VALS = [0.6667, 0.8]
+N_SIM   = 200
+
+CHECKPOINTS_PCT = [0.0, 1.0, 5.0, 10.0, 20.0, 30.0]
+
+
+def load_data():
+    rec = {}  # rec[f_s][m_val] -> np data dict
+    for m in M_VALS:
+        for fs in FS_VALS:
+            fs_str = f'{fs:.4f}' if abs(fs - 0.8) < 0.001 else f'{fs}'
+            path = DATA_DIR / f'sweep_F_m{m}_fs{fs_str}_N1000.npz'
+            d = dict(np.load(path, allow_pickle=True))
+            rec.setdefault(fs, {})[m] = d
+    return rec
+
+
+def checkpoint_indices(swap_fracs, checkpoints_pct=CHECKPOINTS_PCT):
+    sf_pct = swap_fracs * 100.0
+    cap    = sf_pct[-1]
+    idxs   = []
+    for cp in checkpoints_pct:
+        if cp > cap + 0.5:
+            break
+        idxs.append(int(np.argmin(np.abs(sf_pct - cp))))
+    return idxs
+
+
+def fmt(mean_val, var_val):
+    sd = np.sqrt(max(float(var_val), 0.0))
+    return f'{float(mean_val)*100:.2f} ({sd*100:.2f})'
+
+
+def cell_vals(data, si, oi, idx):
+    """Return (bs, bo, bov_all, bov_peers) with corrected [oi, si, idx] indexing."""
+    bs       = float(data['all_beta_s'          ][oi, si, idx])
+    vbs      = float(data['all_var_beta_s'       ][oi, si, idx])
+    bo       = float(data['all_beta_o'           ][oi, si, idx])
+    vbo      = float(data['all_var_beta_o'       ][oi, si, idx])
+    bov      = float(data['all_beta_overall'     ][oi, si, idx])
+    vbov     = float(data['all_var_beta_overall' ][oi, si, idx])
+    bov_p    = float(data['peers_beta_overall'   ][oi, si, idx])
+    vbov_p   = float(data['peers_var_beta_overall'][oi, si, idx])
+    return (bs, vbs, bo, vbo, bov, vbov, bov_p, vbov_p)
+
+
+def make_table(hss, hoo, f_s, rec):
+    m0 = M_VALS[0]
+    d0 = rec[f_s][m0]
+    hss_arr = list(d0['hss_vals'])
+    hoo_arr = list(d0['hoo_vals'])
+    si   = hss_arr.index(hss)
+    oi   = hoo_arr.index(hoo)
+    sf   = d0['swap_fracs']
+    idxs = checkpoint_indices(sf)
+
+    fs_frac  = r'\nicefrac{2}{3}' if abs(f_s - 0.6667) < 0.001 else f'{f_s}'
+    hss_tag  = str(int(round(hss * 1000)))
+    hoo_tag  = str(int(round(hoo * 1000)))
+    fs_tag   = '0667' if abs(f_s - 0.6667) < 0.001 else str(f_s).replace('.', '')
+
+    label   = f'tab:subset_fs{fs_tag}_hss{hss_tag}_hoo{hoo_tag}'
+    caption = (
+        rf'\textcolor{{blue}}{{Misperception $\beta$ (mean and SD across {N_SIM} simulations) '
+        rf'at each swap checkpoint, for $h_{{ss}} = {hss}$, $h_{{oo}} = {hoo}$ '
+        rf'($N = 1{{,}}000$ agents, supporter fraction $f_s = {fs_frac}$). '
+        r'$\beta = f_s \cdot 100 - \hat{p}$ in percentage points; '
+        r'positive values indicate underestimation of support. '
+        r'$\beta_s$: supporter group; $\beta_o$: opponent group; '
+        r'$\beta_{\mathrm{overall}}$: population-weighted average; '
+        r'$\beta_{\mathrm{unswapped}}$: $\beta_{\mathrm{overall}}$ restricted to unswapped nodes only.}'
+    )
+
+    lines = [
+        r'\begin{table}[H]',
+        r'\centering',
+        r'\caption{' + caption + '}',
+        r'\label{' + label + '}',
+    ]
+
+    for m_val in M_VALS:
+        d = rec[f_s][m_val]
+        lines.append(rf'\par\medskip')
+        lines.append(rf'\noindent\textit{{$m = {m_val}$}}\\[2pt]')
+        lines.append(r'\begin{tabular}{l rrrr}')
+        lines.append(r'\toprule')
+        lines.append(r'Swaps & $\beta_s$ & $\beta_o$ & $\beta_{\mathrm{overall}}$ & $\beta_{\mathrm{unswapped}}$ \\')
+        lines.append(r'\midrule')
+        for idx in idxs:
+            swap_cnt = int(round(sf[idx] * 1000))
+            bs, vbs, bo, vbo, bov, vbov, bov_p, vbov_p = cell_vals(d, si, oi, idx)
+            row = (f'{swap_cnt} & {fmt(bs, vbs)} & {fmt(bo, vbo)} & '
+                   f'{fmt(bov, vbov)} & {fmt(bov_p, vbov_p)} \\\\')
+            lines.append(row)
+        lines.append(r'\bottomrule')
+        lines.append(r'\end{tabular}')
+
+    lines.append(r'\end{table}')
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def main():
+    rec = load_data()
+    out_lines = [
+        '% si_tables.tex — 7-condition subset of the swap-simulation tables (agents include their own opinion), generated by 06_swap_simulations/generate_subset_tables.py',
+        '% Requires \\usepackage{booktabs}, \\usepackage{nicefrac}, \\usepackage{float}, \\usepackage{xcolor}',
+        '% 7 original (h_ss, h_oo) conditions; m in {2,5,10}; f_s in {2/3, 0.8}',
+        '% Each table includes beta_unswapped column alongside beta_overall',
+        '% Auto-regenerated with corrected [i_hoo, i_hss] axis indexing',
+        '',
+    ]
+    for f_s in FS_VALS:
+        for hss, hoo in CONDITIONS:
+            out_lines.append(make_table(hss, hoo, f_s, rec))
+
+    OUT_PATH.parent.mkdir(exist_ok=True)
+    OUT_PATH.write_text('\n'.join(out_lines))
+    print(f'Wrote {OUT_PATH}  ({OUT_PATH.stat().st_size // 1024} KB, '
+          f'{len(CONDITIONS) * len(FS_VALS)} tables)')
+
+
+if __name__ == '__main__':
+    main()

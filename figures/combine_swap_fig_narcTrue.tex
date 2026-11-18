@@ -1,0 +1,15 @@
+% combine_swap_fig_narcTrue.tex — main-text Fig 5 with panels where agents include their own opinion.
+% Compile with pdflatex from inside figures/ -> combine_swap_fig_narcTrue.pdf
+% Panel A: 06_swap_simulations/make_fig5A.py (m = 10); Panel B: 06_swap_simulations/generate_opinion_histograms.ipynb (m = 10, 13% swaps; same network as Fig 4B)
+\documentclass[border=0pt]{standalone}
+\usepackage{graphicx}
+
+\newlength{\figheight}
+\setlength{\figheight}{5.5cm}
+
+\begin{document}
+\begin{tabular}{@{}l@{\hspace{8pt}}l@{}}
+  \includegraphics[height=\figheight]{single_panel_high_homophily_without_legend_narcTrue.pdf} &
+  \includegraphics[height=\figheight]{figure_histogram_example_grouped_swap_narcTrue.pdf}
+\end{tabular}
+\end{document}
